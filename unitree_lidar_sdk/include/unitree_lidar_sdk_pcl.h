@@ -51,14 +51,18 @@ struct PointType
   PCL_ADD_POINT4D
   PCL_ADD_INTENSITY
   std::uint16_t ring;
-  float time;
+  float azimuth;
+  float distance;
+  double time;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 } EIGEN_ALIGN16;
 POINT_CLOUD_REGISTER_POINT_STRUCT(PointType,
   (float, x, x)(float, y, y)(float, z, z)
   (float, intensity, intensity)
   (std::uint16_t, ring, ring)
-  (float, time, time)
+  (float, azimuth, azimuth)
+  (float, distance, distance)
+  (double, time, time_stamp)
 )
 
 PCL_INSTANTIATE(VoxelGrid, PointType)
@@ -81,6 +85,8 @@ void transformUnitreeCloudToPCL(const PointCloudUnitree& cloudIn,  pcl::PointClo
     pt.intensity = cloudIn.points[i].intensity;
     pt.time = cloudIn.points[i].time;
     pt.ring = cloudIn.points[i].ring;
+    pt.azimuth = atan2(cloudIn.points[i].y, cloudIn.points[i].x);
+    pt.distance = hypot(cloudIn.points[i].x, cloudIn.points[i].y, cloudIn.points[i].z);
     cloudOut->push_back(pt);
   }
 }
