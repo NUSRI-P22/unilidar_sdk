@@ -50,8 +50,23 @@ ament_target_dependencies(
   pcl_conversions
 )
 
+add_executable(unitree_lidar_ros2_convertor src/unitree_lidar_ros2_convertor.cpp)
+
+target_link_libraries( unitree_lidar_ros2_convertor
+        ${Boost_SYSTEM_LIBRARY}
+        ${PCL_LIBRARIES}
+        libunitree_lidar_sdk.a
+)
+
+ament_target_dependencies(
+        unitree_lidar_ros2_convertor
+        rclcpp std_msgs
+        sensor_msgs
+        pcl_conversions
+)
+
 install(TARGETS
-unitree_lidar_ros2_node
+unitree_lidar_ros2_node unitree_lidar_ros2_convertor
   DESTINATION lib/${PROJECT_NAME}
 )
 
