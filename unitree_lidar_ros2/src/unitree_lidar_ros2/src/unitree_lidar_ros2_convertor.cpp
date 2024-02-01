@@ -33,7 +33,7 @@ public:
                 "/unilidar/cloud", rclcpp::SensorDataQoS(),
                 std::bind(&PointCloudProcessor::pointcloud_callback, this, std::placeholders::_1));
 
-        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/unilidar/cloud_out", rclcpp::SensorDataQoS());
+        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/lidar/unitree/pointcloud_raw_ex", rclcpp::SensorDataQoS());
     }
 
 private:
@@ -65,7 +65,7 @@ private:
         sensor_msgs::msg::PointCloud2 output_msg;
         pcl::toROSMsg(*cloudOut, output_msg);
         output_msg.header.stamp = this->get_clock()->now();
-        output_msg.header.frame_id = msg->header.frame_id;
+        output_msg.header.frame_id = "base_link";
         publisher_->publish(output_msg);
     }
 
