@@ -24,14 +24,14 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(OldPointType,
 )
 
 
-class PointCloudProcessor : public rclcpp::Node
+class UnitreeLidarConvertor : public rclcpp::Node
 {
 public:
-    PointCloudProcessor() : Node("pointcloud_processor")
+    UnitreeLidarConvertor(const rclcpp::NodeOptions &options = rclcpp::NodeOptions()) : Node("unitree_lidar_convertor", options)
     {
         subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
                 "/unilidar/cloud", rclcpp::SensorDataQoS(),
-                std::bind(&PointCloudProcessor::pointcloud_callback, this, std::placeholders::_1));
+                std::bind(&UnitreeLidarConvertor::pointcloud_callback, this, std::placeholders::_1));
 
         publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/lidar/unitree/pointcloud_raw_ex", rclcpp::SensorDataQoS());
     }
@@ -76,8 +76,12 @@ private:
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<PointCloudProcessor>();
+    auto node = std::make_shared<UnitreeLidarConvertor>();
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
 }
+
+#include "rclcpp_components/register_node_macro.hpp"
+
+RCLCPP_COMPONENTS_REGISTER_NODE(UnitreeLidarConvertor)
