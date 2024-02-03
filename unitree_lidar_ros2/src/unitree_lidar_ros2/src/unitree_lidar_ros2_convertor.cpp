@@ -33,7 +33,7 @@ public:
                 "/unilidar/cloud", rclcpp::SensorDataQoS(),
                 std::bind(&UnitreeLidarConvertor::pointcloud_callback, this, std::placeholders::_1));
 
-        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/lidar/unitree/pointcloud_raw_ex", rclcpp::SensorDataQoS());
+        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/unilidar/cloud_out", rclcpp::SensorDataQoS());
     }
 
 private:
