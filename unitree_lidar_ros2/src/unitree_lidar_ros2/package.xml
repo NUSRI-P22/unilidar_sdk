@@ -16,7 +16,9 @@
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>pcl_conversions</depend>
-  <depend>pcl</depend>
+  <!-- pcl is commented for rosdep installing problem because pcl is not official ros2 package -->
+  <!-- uncomment pcl if there is any error for it -->
+  <!-- <depend>pcl</depend> -->
   <depend>rclcpp_components</depend>
 
   <export>
