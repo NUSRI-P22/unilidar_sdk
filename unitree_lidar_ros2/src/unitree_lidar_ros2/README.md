@@ -53,7 +53,7 @@ The defalut IMU topic and its frame name is:
 You can just build this ROS2 package as follows:
 - Download
 ```
-git clone https://github.com/unitreerobotics/unilidar_sdk.git
+git clone https://github.com/NUSRI-P22/unilidar_sdk.git
 ```
 
 - Compile
