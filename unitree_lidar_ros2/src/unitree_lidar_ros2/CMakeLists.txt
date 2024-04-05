@@ -52,22 +52,6 @@ ament_target_dependencies(
         rclcpp_components
 )
 
-add_executable(unitree_lidar_ros2_convertor src/unitree_lidar_ros2_convertor.cpp)
-
-target_link_libraries( unitree_lidar_ros2_convertor
-        ${Boost_SYSTEM_LIBRARY}
-        ${PCL_LIBRARIES}
-        libunitree_lidar_sdk.a
-)
-
-ament_target_dependencies(
-        unitree_lidar_ros2_convertor
-        rclcpp std_msgs
-        sensor_msgs
-        pcl_conversions
-        rclcpp_components
-)
-
 add_library(unitree_lidar_ros2_node_lib SHARED src/unitree_lidar_ros2_node.cpp)
 
 target_link_libraries( unitree_lidar_ros2_node_lib
@@ -87,26 +71,8 @@ ament_target_dependencies(
 rclcpp_components_register_nodes(unitree_lidar_ros2_node_lib "UnitreeLidarSDKNode")
 
 
-add_library(unitree_lidar_ros2_convertor_lib SHARED src/unitree_lidar_ros2_convertor.cpp)
-
-target_link_libraries( unitree_lidar_ros2_convertor_lib
-        ${Boost_SYSTEM_LIBRARY}
-        ${PCL_LIBRARIES}
-        libunitree_lidar_sdk.a
-)
-
-ament_target_dependencies(
-        unitree_lidar_ros2_convertor_lib
-        rclcpp std_msgs
-        sensor_msgs
-        pcl_conversions
-        rclcpp_components
-)
-
-rclcpp_components_register_nodes(unitree_lidar_ros2_convertor_lib "UnitreeLidarConvertor")
-
 install(TARGETS
-unitree_lidar_ros2_node unitree_lidar_ros2_convertor
+unitree_lidar_ros2_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -115,7 +81,7 @@ install(FILES rviz/view.rviz launch/launch.py
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(TARGETS unitree_lidar_ros2_node_lib unitree_lidar_ros2_convertor_lib
+install(TARGETS unitree_lidar_ros2_node_lib
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin)
